@@ -3,6 +3,7 @@ import { PORT } from './src/config';
 import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
+import authRouter from './src/routes/auth.routes';
 
 const app = express();
 
@@ -19,8 +20,6 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Auth routes
-app.get('/', (req, res) => {
-  res.json({ ok: 'Hello World' });
-});
+app.use('/api/auth', authRouter);
 
 // Calendar events routes
