@@ -16,7 +16,7 @@ export const createUser = (req, res = response) => {
 
   res.json({
     ok: true,
-    msg: 'register',
+    message: 'register',
     name,
     email,
     password,
