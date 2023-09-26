@@ -1,4 +1,5 @@
 import { check } from 'express-validator';
+import validateErrors from '../../validate-errors';
 
 const validateLoginFields = [
   check('email')
@@ -13,6 +14,7 @@ const validateLoginFields = [
     .withMessage('password is required')
     .isLength({ min: 8, max: 12 })
     .withMessage('password must be between 8 and 12 characters'),
+  (req, res, next) => validateErrors(req, res, next),
 ];
 
 export default validateLoginFields;
