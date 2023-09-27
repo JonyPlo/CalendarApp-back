@@ -1,20 +1,41 @@
 import { response } from 'express'; // Se importa response y se lo agrega en el parametro res para obtener el autocompletado de las propiedades de res
 import User from '../models/User';
+import bcrypt from 'bcrypt';
 
-export const loginUser = (req, res = response) => {
+export const loginUser = async (req, res = response) => {
   try {
     const { email, password } = req.body;
 
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'user not found',
+      });
+    }
+
+    const validPassword = bcrypt.compareSync(password, user.password);
+
+    if (!validPassword) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'invalid password',
+      });
+    }
+
+    // JWT
+
     res.json({
       ok: true,
-      msg: 'login',
-      email,
-      password,
+      uid: user._id,
+      name: user.name,
     });
   } catch (error) {
+    console.log(error);
     res.status(400).json({
       ok: false,
-      msg: 'error logging in user',
+      msg: 'error logging user, please contact with the administrator',
       error,
     });
   }
@@ -22,15 +43,28 @@ export const loginUser = (req, res = response) => {
 
 export const createUser = async (req, res = response) => {
   try {
-    // const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
-    const user = new User(req.body);
+    let user = await User.findOne({ email });
+
+    if (user) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'user already exists',
+      });
+    }
+
+    user = new User(req.body);
+
+    const salt = bcrypt.genSaltSync();
+    user.password = bcrypt.hashSync(password, salt);
 
     await user.save();
 
     res.status(201).json({
       ok: true,
-      msg: 'user registered',
+      uid: user._id,
+      name: user.name,
     });
   } catch (error) {
     console.log(error);
