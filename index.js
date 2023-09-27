@@ -4,6 +4,7 @@ import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
 import authRouter from './src/routes/auth.routes';
+import './src/database/dbConnection';
 
 const app = express();
 
