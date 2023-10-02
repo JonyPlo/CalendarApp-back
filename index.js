@@ -4,6 +4,7 @@ import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
 import authRouter from './src/routes/auth.routes';
+import eventRouter from './src/routes/events.routes';
 import './src/database/dbConnection';
 
 const app = express();
@@ -24,3 +25,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/auth', authRouter);
 
 // Calendar events routes
+app.use('/api/events', eventRouter);
