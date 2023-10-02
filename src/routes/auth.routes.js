@@ -11,6 +11,7 @@ import {
 } from '../controllers/auth.controllers';
 import validateLoginFields from '../middlewares/auth/validate-fields/login';
 import validateRegisterFields from '../middlewares/auth/validate-fields/register';
+import validateJWT from '../middlewares/validate-jwt';
 
 const router = Router();
 
@@ -21,6 +22,6 @@ router.route('/').post([validateLoginFields], loginUser);
 router.route('/new').post([validateRegisterFields], createUser);
 
 // Renew Token Route
-router.route('/renew').get(renewToken);
+router.route('/renew').get(validateJWT, renewToken);
 
 export default router;
