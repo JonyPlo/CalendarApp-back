@@ -1,5 +1,9 @@
 {
   "conventionalCommits.scopes": [
-    "auth"
+    "auth",
+    "docs"
+  ],
+  "cSpell.words": [
+    "Lenght"
   ]
 }
