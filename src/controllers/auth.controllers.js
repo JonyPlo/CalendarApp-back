@@ -1,6 +1,7 @@
 import { response } from 'express'; // Se importa response y se lo agrega en el parametro res para obtener el autocompletado de las propiedades de res
 import User from '../models/User';
 import bcrypt from 'bcrypt';
+import generateJWT from '../../helpers/jwt';
 
 export const loginUser = async (req, res = response) => {
   try {
@@ -24,12 +25,14 @@ export const loginUser = async (req, res = response) => {
       });
     }
 
-    // JWT
+    //Generate JWT
+    const token = await generateJWT(user.id, user.name);
 
     res.json({
       ok: true,
       uid: user._id,
       name: user.name,
+      token,
     });
   } catch (error) {
     console.log(error);
@@ -61,10 +64,14 @@ export const createUser = async (req, res = response) => {
 
     await user.save();
 
+    //Generate JWT
+    const token = await generateJWT(user.id, user.name);
+
     res.status(201).json({
       ok: true,
       uid: user._id,
       name: user.name,
+      token,
     });
   } catch (error) {
     console.log(error);
