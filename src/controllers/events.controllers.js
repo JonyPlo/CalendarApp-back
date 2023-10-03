@@ -39,11 +39,34 @@ export const createEvent = async (req, res = response) => {
   }
 };
 
-export const updateEvent = (req, res = response) => {
+export const updateEvent = async (req, res = response) => {
+  const { id } = req.params;
+  const { uid, body } = req;
+
   try {
+    const event = await Event.findById(id);
+
+    if (!event) {
+      return res.status(404).json({
+        ok: false,
+        msg: 'event not found',
+      });
+    }
+
+    if (event.user.toString() !== uid) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'you do not have privileges to update this event',
+      });
+    }
+
+    const modifiedEvent = await Event.findByIdAndUpdate(id, body, {
+      new: true,
+    });
+
     res.status(200).json({
       ok: true,
-      msg: 'updateEvent',
+      event: modifiedEvent,
     });
   } catch (error) {
     console.log(error);
@@ -54,11 +77,32 @@ export const updateEvent = (req, res = response) => {
   }
 };
 
-export const deleteEvent = (req, res = response) => {
+export const deleteEvent = async (req, res = response) => {
+  const { id } = req.params;
+  const { uid } = req;
+
   try {
+    const event = await Event.findById(id);
+
+    if (!event) {
+      return res.status(404).json({
+        ok: false,
+        msg: 'event not found',
+      });
+    }
+
+    if (event.user.toString() !== uid) {
+      return res.status(401).json({
+        ok: false,
+        msg: 'you do not have privileges to update this event',
+      });
+    }
+
+    await Event.findByIdAndDelete(id);
+
     res.status(200).json({
       ok: true,
-      msg: 'updateEvent',
+      msg: 'the event was deleted',
     });
   } catch (error) {
     console.log(error);

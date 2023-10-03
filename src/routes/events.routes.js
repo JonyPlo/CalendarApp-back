@@ -19,6 +19,6 @@ router.use(validateJWT); // De esta forma se sube un middleware de nivel para qu
 
 router.route('/').get(getEvents).post(validateEvents, createEvent);
 
-router.route('/:id').put(updateEvent).delete(deleteEvent);
+router.route('/:id').put(validateEvents, updateEvent).delete(deleteEvent);
 
 export default router;
