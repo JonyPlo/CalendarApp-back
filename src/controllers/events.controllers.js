@@ -1,63 +1,67 @@
 import { response } from 'express';
+import Event from '../models/Event';
 
 export const getEvents = (req, res = response) => {
   try {
-    res.json({
+    res.status(200).json({
       ok: true,
       msg: 'updateEvent',
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(500).json({
       ok: false,
-      msg: 'error while getting the products',
+      msg: 'internal server error. Please contact the administrator',
     });
   }
 };
 
-export const createEvent = (req, res = response) => {
-  console.log(req.body);
-
+export const createEvent = async (req, res = response) => {
+  const event = new Event(req.body);
   try {
-    res.status(456).json({
+    event.user = req.uid;
+
+    await event.save();
+
+    res.status(201).json({
       ok: true,
-      msg: 'createEvent',
+      event,
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(500).json({
       ok: false,
-      msg: 'error while creating the product',
+      msg: 'internal server error. Please contact the administrator',
     });
   }
 };
 
 export const updateEvent = (req, res = response) => {
   try {
-    res.json({
+    res.status(200).json({
       ok: true,
       msg: 'updateEvent',
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(500).json({
       ok: false,
-      msg: 'error while updating the product',
+      msg: 'internal server error. Please contact the administrator',
     });
   }
 };
 
 export const deleteEvent = (req, res = response) => {
   try {
-    res.json({
+    res.status(200).json({
       ok: true,
       msg: 'updateEvent',
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(500).json({
       ok: false,
-      msg: 'error while deleting the product',
+      msg: 'internal server error. Please contact the administrator',
     });
   }
 };

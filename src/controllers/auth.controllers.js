@@ -28,7 +28,7 @@ export const loginUser = async (req, res = response) => {
     //Generate JWT
     const token = await generateJWT(user.id, user.name);
 
-    res.json({
+    res.status(200).json({
       ok: true,
       uid: user._id,
       name: user.name,
@@ -36,9 +36,9 @@ export const loginUser = async (req, res = response) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(500).json({
       ok: false,
-      msg: 'error logging user, please contact with the administrator',
+      msg: 'internal server error. Please contact the administrator',
       error,
     });
   }
@@ -75,9 +75,9 @@ export const createUser = async (req, res = response) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(400).json({
+    res.status(500).json({
       ok: false,
-      msg: 'error registering user, please contact with the administrator',
+      msg: 'internal server error. Please contact the administrator',
       error,
     });
   }
@@ -88,8 +88,16 @@ export const renewToken = async (req, res = response) => {
 
   const token = await generateJWT(uid, name);
 
-  res.json({
-    ok: true,
-    token,
-  });
+  try {
+    res.status(200).json({
+      ok: true,
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: 'internal server error. Please contact the administrator',
+    });
+  }
 };
