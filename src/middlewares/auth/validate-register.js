@@ -1,7 +1,7 @@
 import { check } from 'express-validator';
-import validateErrors from '../../validate-errors';
+import validateErrors from '../validate-errors';
 
-const validateRegisterFields = [
+const validateRegister = [
   check('name')
     .notEmpty()
     .withMessage('name is required')
@@ -22,4 +22,4 @@ const validateRegisterFields = [
   (req, res, next) => validateErrors(req, res, next),
 ];
 
-export default validateRegisterFields;
+export default validateRegister;

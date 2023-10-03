@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { SEED_JWT } from '../src/config';
+import { SEED_JWT } from '../config';
 
 const generateJWT = (uid, name) => {
   return new Promise((resolve, reject) => {

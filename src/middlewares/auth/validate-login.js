@@ -1,7 +1,7 @@
 import { check } from 'express-validator';
-import validateErrors from '../../validate-errors';
+import validateErrors from '../validate-errors';
 
-const validateLoginFields = [
+const validateLogin = [
   check('email')
     .notEmpty()
     .withMessage('email is required')
@@ -17,4 +17,4 @@ const validateLoginFields = [
   (req, res, next) => validateErrors(req, res, next),
 ];
 
-export default validateLoginFields;
+export default validateLogin;

@@ -1,7 +1,7 @@
 import { response } from 'express'; // Se importa response y se lo agrega en el parametro res para obtener el autocompletado de las propiedades de res
 import User from '../models/User';
 import bcrypt from 'bcrypt';
-import generateJWT from '../../helpers/jwt';
+import generateJWT from '../helpers/jwt';
 
 export const loginUser = async (req, res = response) => {
   try {
