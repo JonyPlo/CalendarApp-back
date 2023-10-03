@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { SEED_JWT } from '../src/config';
+import { SEED_JWT } from '../config';
 
 const generateJWT = (uid, name) => {
   return new Promise((resolve, reject) => {
@@ -9,7 +9,7 @@ const generateJWT = (uid, name) => {
       payload,
       SEED_JWT,
       {
-        expiresIn: '2h',
+        expiresIn: '3h',
       },
       (err, token) => {
         if (err) {
