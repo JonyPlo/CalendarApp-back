@@ -1,6 +1,6 @@
-import { check } from 'express-validator';
-import validateErrors from '../validate-errors';
-import isDate from '../../helpers/isDate';
+import { check } from 'express-validator'
+import validateErrors from '../validate-errors'
+import isDate from '../../helpers/isDate'
 
 const validateEvents = [
   check('title')
@@ -18,7 +18,7 @@ const validateEvents = [
     .withMessage('end is required')
     .custom(isDate)
     .withMessage('end must be a valid date'),
-  (req, res, next) => validateErrors(req, res, next),
-];
+  (req, res, next) => validateErrors(req, res, next)
+]
 
-export default validateEvents;
+export default validateEvents

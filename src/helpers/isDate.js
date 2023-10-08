@@ -1,10 +1,10 @@
-import { isValid } from 'date-fns';
+import { isValid } from 'date-fns'
 
-const isDate = (dateValue) => {
-  if (!dateValue) return false;
+const isDate = dateValue => {
+  if (!dateValue) return false
 
-  const date = isValid(dateValue); // retorna true o false
-  return date;
-};
+  const date = isValid(dateValue) // retorna true o false
+  return date
+}
 
-export default isDate;
+export default isDate
