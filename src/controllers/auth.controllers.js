@@ -91,6 +91,8 @@ export const renewToken = async (req, res = response) => {
   try {
     res.status(200).json({
       ok: true,
+      uid,
+      name,
       token
     })
   } catch (error) {
